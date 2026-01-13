@@ -78,6 +78,32 @@ My Movie Favorite adalah aplikasi Android studi kasus yang menampilkan katalog f
 4. Pastikan emulator/perangkat memiliki koneksi internet agar Glide bisa mengambil poster dari URL TMDB.
 5. Jika database kosong, aplikasi akan melakukan seed data dari `app/src/main/assets/movies.json` saat pertama kali dijalankan.
 
+## Dokumentasi Hasil
+Dokumentasi UI dan rekaman aplikasi tersimpan di folder `hasil`:
+
+### Screenshot
+- Browse/List Movie  
+  ![List movie](<hasil/list movie.png>)
+- Search Movie  
+  ![Search movie](<hasil/search movie.png>)
+- Watchlist  
+  ![Watchlist](<hasil/watchlist.png>)
+- Detail Movie  
+  ![Detail movie](<hasil/detail movie.png>)
+- Add Movie  
+  ![Add movie](<hasil/add movie.png>)
+- Edit Movie  
+  ![Edit movie](<hasil/edit movie.png>)
+- Login  
+  ![Login](<hasil/login.png>)
+- Register  
+  ![Register](<hasil/register.png>)
+- About  
+  ![About](<hasil/about.png>)
+
+### Video Demo
+- Recording aplikasi: [recordingaplikasimymovievaforite.mov](<hasil/recordingaplikasimymovievaforite.mov>)
+
 ## Catatan Pengembangan
 - Autentikasi saat ini bersifat sederhana dan menyimpan password sebagai plain text di Firebase. Untuk produksi, gunakan Firebase Authentication.
 - Sesi login disimpan di `SharedPreferences` untuk kebutuhan greeting dan akses aplikasi.
