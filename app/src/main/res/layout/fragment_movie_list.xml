@@ -46,4 +46,15 @@
         app:layout_constraintTop_toBottomOf="@id/textHeading"
         tools:listitem="@layout/item_movie" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/content_description_add_movie"
+        app:backgroundTint="@color/netflix_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_watchlist" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

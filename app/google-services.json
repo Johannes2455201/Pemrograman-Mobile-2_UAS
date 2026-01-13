@@ -1,21 +1,22 @@
 {
   "project_info": {
-    "project_number": "124583478062",
-    "project_id": "mymoviefavorite",
-    "storage_bucket": "mymoviefavorite.firebasestorage.app"
+    "project_number": "816998210973",
+    "firebase_url": "https://mymoviefavorite-ebac2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mymoviefavorite-ebac2",
+    "storage_bucket": "mymoviefavorite-ebac2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:124583478062:android:79c5128b891738a619b0bf",
+        "mobilesdk_app_id": "1:816998210973:android:b806ce1837ce710e9ba374",
         "android_client_info": {
-          "package_name": "com.johannes.mymoviefavorite"
+          "package_name": "com.johanes.mymoviefavorite"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBbp2-5S4sZKik4RvIdEbAgOimBA47KiPw"
+          "current_key": "AIzaSyAmYjxPhdWqMCEr_9KwjwdfD8sceM1zPM4"
         }
       ],
       "services": {

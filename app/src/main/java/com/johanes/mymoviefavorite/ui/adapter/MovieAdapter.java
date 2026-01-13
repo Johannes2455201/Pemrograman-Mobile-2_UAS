@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +44,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         notifyDataSetChanged();
     }
 
+    @Nullable
+    public Movie getMovieAt(int position) {
+        if (position < 0 || position >= movies.size()) {
+            return null;
+        }
+        return movies.get(position);
+    }
+
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,7 +73,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public long getItemId(int position) {
-        return movies.get(position).getId().hashCode();
+        String id = movies.get(position).getId();
+        return id == null ? RecyclerView.NO_ID : id.hashCode();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {

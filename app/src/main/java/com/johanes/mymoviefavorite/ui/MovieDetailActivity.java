@@ -1,5 +1,6 @@
 package com.johanes.mymoviefavorite.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,32 +25,71 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private MaterialButton watchlistButton;
     private MaterialButton backButton;
+    private MaterialButton editButton;
+    private MaterialToolbar toolbar;
+    private ImageView posterView;
+    private TextView titleView;
+    private TextView metaView;
+    private TextView genresView;
+    private TextView overviewView;
     private Movie movie;
+    private String movieId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        String movieId = getIntent().getStringExtra(EXTRA_MOVIE_ID);
+        movieId = getIntent().getStringExtra(EXTRA_MOVIE_ID);
         movie = MovieDataSource.findById(this, movieId);
         if (movie == null) {
             finish();
             return;
         }
 
-        MaterialToolbar toolbar = findViewById(R.id.detailToolbar);
+        toolbar = findViewById(R.id.detailToolbar);
         toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
-        toolbar.setTitle(movie.getTitle());
 
-        ImageView posterView = findViewById(R.id.imagePoster);
-        TextView titleView = findViewById(R.id.textTitle);
-        TextView metaView = findViewById(R.id.textMeta);
-        TextView genresView = findViewById(R.id.textGenres);
-        TextView overviewView = findViewById(R.id.textOverview);
+        posterView = findViewById(R.id.imagePoster);
+        titleView = findViewById(R.id.textTitle);
+        metaView = findViewById(R.id.textMeta);
+        genresView = findViewById(R.id.textGenres);
+        overviewView = findViewById(R.id.textOverview);
         watchlistButton = findViewById(R.id.buttonWatchlist);
+        editButton = findViewById(R.id.buttonEdit);
         backButton = findViewById(R.id.buttonBack);
 
+        bindMovie();
+
+        watchlistButton.setOnClickListener(v -> {
+            boolean newState = MovieDataSource.toggleWatchlisted(this, movie.getId());
+            movie = MovieDataSource.findById(this, movie.getId());
+            updateWatchlistButton();
+            int message = newState ? R.string.watchlist_added_message : R.string.watchlist_removed_message;
+            Snackbar.make(v, message, Snackbar.LENGTH_SHORT).show();
+        });
+        editButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MovieFormActivity.class);
+            intent.putExtra(MovieFormActivity.EXTRA_MOVIE_ID, movie.getId());
+            startActivity(intent);
+        });
+        backButton.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Movie updated = MovieDataSource.findById(this, movieId);
+        if (updated == null) {
+            finish();
+            return;
+        }
+        movie = updated;
+        bindMovie();
+    }
+
+    private void bindMovie() {
+        toolbar.setTitle(movie.getTitle());
         Glide.with(this)
                 .load(movie.getImageUrl())
                 .placeholder(R.drawable.bg_movie_poster_placeholder)
@@ -66,17 +106,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         metaView.setText(meta);
         genresView.setText(movie.getGenresAsString());
         overviewView.setText(movie.getOverview());
-
         updateWatchlistButton();
-
-        watchlistButton.setOnClickListener(v -> {
-            boolean newState = MovieDataSource.toggleWatchlisted(this, movie.getId());
-            movie = MovieDataSource.findById(this, movie.getId());
-            updateWatchlistButton();
-            int message = newState ? R.string.watchlist_added_message : R.string.watchlist_removed_message;
-            Snackbar.make(v, message, Snackbar.LENGTH_SHORT).show();
-        });
-        backButton.setOnClickListener(v -> finish());
     }
 
     private void updateWatchlistButton() {

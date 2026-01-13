@@ -1,6 +1,7 @@
 package com.johanes.mymoviefavorite.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,34 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.johanes.mymoviefavorite.R;
+import com.johanes.mymoviefavorite.data.Movie;
 import com.johanes.mymoviefavorite.data.MovieDataSource;
+
+import java.util.List;
 
 public class AboutFragment extends Fragment {
 
     private TextView watchlistTextView;
+    private View rootView;
+
+    private final MovieDataSource.MoviesListener moviesListener = new MovieDataSource.MoviesListener() {
+        @Override
+        public void onMoviesChanged(List<Movie> movies) {
+            updateWatchlistSummary();
+        }
+
+        @Override
+        public void onError(String message) {
+            if (rootView != null) {
+                String text = TextUtils.isEmpty(message)
+                        ? getString(R.string.error_generic)
+                        : message;
+                Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -27,13 +50,20 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().setTitle(R.string.menu_about);
+        rootView = view;
         watchlistTextView = view.findViewById(R.id.textAboutWatchlist);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        updateWatchlistSummary();
+    public void onStart() {
+        super.onStart();
+        MovieDataSource.addListener(requireContext(), moviesListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        MovieDataSource.removeListener(moviesListener);
     }
 
     private void updateWatchlistSummary() {
