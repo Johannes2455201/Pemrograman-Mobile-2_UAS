@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.johanes.mymoviefavorite.R;
 import com.johanes.mymoviefavorite.data.Movie;
 import com.johanes.mymoviefavorite.data.MovieDataSource;
+import com.johanes.mymoviefavorite.data.SessionManager;
 
 import java.util.List;
 
@@ -52,6 +54,8 @@ public class AboutFragment extends Fragment {
         requireActivity().setTitle(R.string.menu_about);
         rootView = view;
         watchlistTextView = view.findViewById(R.id.textAboutWatchlist);
+        MaterialButton logoutButton = view.findViewById(R.id.buttonLogout);
+        logoutButton.setOnClickListener(v -> performLogout());
     }
 
     @Override
@@ -69,5 +73,13 @@ public class AboutFragment extends Fragment {
     private void updateWatchlistSummary() {
         int watchlistCount = MovieDataSource.getWatchlisted(requireContext()).size();
         watchlistTextView.setText(getString(R.string.about_watchlist_format, watchlistCount));
+    }
+
+    private void performLogout() {
+        SessionManager.clearSession(requireContext());
+        android.content.Intent intent = new android.content.Intent(requireContext(), LoginActivity.class);
+        intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        requireActivity().finish();
     }
 }

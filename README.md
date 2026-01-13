@@ -1,20 +1,27 @@
 # My Movie Favorite
 
 ## Ikhtisar Proyek
-My Movie Favorite adalah aplikasi Android studi kasus yang menampilkan katalog film ala Netflix dengan data dummy. Aplikasi dibangun menggunakan Android Studio (AGP 8.13.0) dan bahasa pemrograman Java. Fokus proyek ini adalah memperlihatkan struktur arsitektur dasar Android modern (fragment, adapter, asset JSON, dan komponen Material Design) untuk keperluan asesmen.
+My Movie Favorite adalah aplikasi Android studi kasus yang menampilkan katalog film ala Netflix dengan data yang tersimpan di Firebase Realtime Database. Aplikasi dibangun menggunakan Android Studio (AGP 8.13.0) dan bahasa pemrograman Java. Fokus proyek ini adalah memperlihatkan struktur arsitektur Android modern (fragment, adapter, form input, Firebase, dan komponen Material Design) untuk keperluan asesmen.
 
 ## Konsep Android yang Digunakan
 - **Activity & Fragment**
-  - `MainActivity` bertugas sebagai host seluruh tab utama. Untuk setiap menu, aplikasi menampilkan fragment yang berbeda: `MovieListFragment`, `SearchFragment`, `WatchlistFragment`, dan `ProfileFragment`. Fragment dipilih via `BottomNavigationView`, sehingga pengalaman navigasi terasa native dan modular.
-  - `MovieDetailActivity` berjalan terpisah untuk menampilkan detail film. Activity ini memanfaatkan `MaterialToolbar` dengan tombol kembali serta memuat konten melalui Glide.
+  - `MainActivity` bertugas sebagai host seluruh tab utama. Untuk setiap menu, aplikasi menampilkan fragment yang berbeda: `MovieListFragment`, `SearchFragment`, `WatchlistFragment`, dan `AboutFragment`. Fragment dipilih via `BottomNavigationView`, sehingga pengalaman navigasi terasa native dan modular.
+  - `MovieDetailActivity` berjalan terpisah untuk menampilkan detail film dan mendukung edit data.
+  - `MovieFormActivity` digunakan untuk tambah/edit film melalui form input.
+  - `LoginActivity` dan `RegisterActivity` menangani autentikasi sederhana.
 
 - **RecyclerView & Adapter**
   - Daftar film pada tab Browse/Search/Watchlist dirender memakai `RecyclerView` dengan `MovieAdapter`. Adapter ini memanfaatkan pola ViewHolder untuk menjaga performa scrolling serta menerapkan binding state (judul, genre, rating, overview).
   - Setiap kartu menggunakan `MaterialCardView` dan `Chip` untuk rating, mengikuti guideline Material Design.
 
-- **Sumber Data Dummy**
-  - Data film disimpan di `app/src/main/assets/movies.json`. File ini memuat id, judul, overview, genre, rating, runtime, status watchlist, dan URL poster.
-  - `MovieDataSource` membaca JSON melalui `AssetManager`, kemudian memetakan ke model `Movie`. Data disimpan in-memory dan dipakai untuk pencarian, filter watchlist, serta toggle status watchlist.
+- **Sumber Data Firebase**
+  - Data film disimpan di Firebase Realtime Database pada path `movies`.
+  - `MovieDataSource` memuat data dari Firebase, menyimpan cache lokal, dan melakukan CRUD. Jika database kosong, data awal otomatis disalin dari `app/src/main/assets/movies.json`.
+  - Status watchlist disimpan dan diperbarui di Firebase sehingga konsisten lintas layar.
+
+- **Autentikasi Sederhana**
+  - Data user disimpan di Firebase Realtime Database pada path `users`.
+  - Login/registrasi memvalidasi email dan password secara sederhana, lalu menyimpan sesi di `SharedPreferences` untuk menampilkan greeting dan menjaga sesi login.
 
 - **Image Loading**
   - Library **Glide** digunakan untuk memuat URL poster pada daftar dan detail film. Glide menangani caching, placeholder, dan fallback agar UI tetap stabil ketika jaringan lambat.
@@ -25,7 +32,10 @@ My Movie Favorite adalah aplikasi Android studi kasus yang menampilkan katalog f
 
 ## Fitur Utama
 1. **Browse (Browse/Showing Today)**
-   - Menampilkan daftar film yang tersedia hari ini dengan layout kartu. Heading “Showing Today” ditampilkan di atas daftar.
+   - Menampilkan daftar film dari Firebase dengan layout kartu. Header “Showing Today” ditampilkan di atas daftar.
+   - Greeting pengguna login tampil di atas daftar.
+   - Tombol tambah film (FAB) membuka form untuk menambahkan film baru.
+   - Swipe ke kiri pada item untuk menghapus film.
    - Klik kartu film membuka halaman detail.
 
 2. **Search**
@@ -38,27 +48,38 @@ My Movie Favorite adalah aplikasi Android studi kasus yang menampilkan katalog f
 4. **Detail Film**
    - Halaman detail menampilkan poster resolusi tinggi, metadata (tahun, rating, lama durasi), genre, dan sinopsis.
    - Tombol watchlist mendukung _toggle_: pengguna dapat menambahkan atau menghapus film dari watchlist langsung dari halaman detail. Feedback diberikan melalui `Snackbar`.
+   - Tombol edit membuka form untuk memperbarui data film.
    - Disediakan tombol “Back” untuk kembali ke tab sebelumnya.
 
-5. **Profile**
-   - Menampilkan identitas pengguna (Johannes Triestanto, Kelas TIF RM 23 B, NIM 24552012008, Universitas Teknologi Bandung) beserta highlight watchlist (jumlah film).
-   - Menggunakan `ShapeableImageView` sebagai avatar placeholder dan komponen Material untuk memisahkan section.
+5. **About**
+   - Menampilkan identitas aplikasi/pengembang beserta highlight watchlist.
+   - Menyediakan tombol logout yang menghapus sesi dan kembali ke halaman login.
+
+6. **Login & Register**
+   - Registrasi user baru (nama, email, password) disimpan ke Firebase.
+   - Login memverifikasi user dan menyimpan sesi lokal untuk greeting.
 
 ## Alur Navigasi
 1. **Bottom Navigation**
-   - Empat menu (Browse, Search, Watchlist, Profile) dipasang pada `BottomNavigationView`. Title di `MaterialToolbar` otomatis menyesuaikan fragment aktif.
+   - Empat menu (Browse, Search, Watchlist, About) dipasang pada `BottomNavigationView`. Title di `MaterialToolbar` otomatis menyesuaikan fragment aktif.
 
 2. **Detail Navigation**
    - Saat pengguna memilih film pada daftar (Browse/Search/Watchlist), aplikasi melakukan intent ke `MovieDetailActivity` dengan membawa `EXTRA_MOVIE_ID`.
    - Activity detail membaca ulang data dari `MovieDataSource` untuk memastikan state terbaru (misal status watchlist).
 
+3. **Authentication Flow**
+   - Jika belum login, aplikasi mengarahkan ke `LoginActivity`.
+   - Logout di About akan menghapus sesi dan kembali ke login.
+
 ## Cara Menjalankan
 1. Buka proyek pada Android Studio (versi flamingo ke atas/AGP 8+).
-2. Jalankan `./gradlew :app:assembleDebug` atau gunakan tombol “Run” di Android Studio.
-3. Pastikan emulator/perangkat memiliki koneksi internet agar Glide bisa mengambil poster dari URL TMDB.
-4. Jika ingin menyesuaikan data film, edit `app/src/main/assets/movies.json` lalu jalankan ulang aplikasi.
+2. Pastikan `google-services.json` sudah terpasang dan Firebase Realtime Database sudah diaktifkan.
+3. Jalankan `./gradlew :app:assembleDebug` atau gunakan tombol “Run” di Android Studio.
+4. Pastikan emulator/perangkat memiliki koneksi internet agar Glide bisa mengambil poster dari URL TMDB.
+5. Jika database kosong, aplikasi akan melakukan seed data dari `app/src/main/assets/movies.json` saat pertama kali dijalankan.
 
 ## Catatan Pengembangan
-- Aplikasi saat ini menyimpan status watchlist secara in-memory. Jika ingin persistensi lintas sesi, dapat menambahkan `SharedPreferences` atau database Room dan memperbarui `MovieDataSource`.
+- Autentikasi saat ini bersifat sederhana dan menyimpan password sebagai plain text di Firebase. Untuk produksi, gunakan Firebase Authentication.
+- Sesi login disimpan di `SharedPreferences` untuk kebutuhan greeting dan akses aplikasi.
 - Desain warna, ikon, dan komponen dapat dikembangkan lebih lanjut agar semakin mendekati Netflix (misalnya menambahkan carousel atau kategori).
 - Semua string disimpan di `values/strings.xml` untuk memudahkan lokaliasi.

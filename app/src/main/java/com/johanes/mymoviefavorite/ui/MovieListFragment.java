@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.johanes.mymoviefavorite.R;
 import com.johanes.mymoviefavorite.data.Movie;
 import com.johanes.mymoviefavorite.data.MovieDataSource;
+import com.johanes.mymoviefavorite.data.SessionManager;
 import com.johanes.mymoviefavorite.ui.adapter.MovieAdapter;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class MovieListFragment extends Fragment {
 
     private MovieAdapter adapter;
     private TextView emptyStateView;
+    private TextView greetingView;
     private View rootView;
 
     private final MovieDataSource.MoviesListener moviesListener = new MovieDataSource.MoviesListener() {
@@ -61,6 +63,7 @@ public class MovieListFragment extends Fragment {
         rootView = view;
         RecyclerView recyclerView = view.findViewById(R.id.recyclerMovies);
         emptyStateView = view.findViewById(R.id.textEmptyState);
+        greetingView = view.findViewById(R.id.textGreeting);
         FloatingActionButton addButton = view.findViewById(R.id.fabAddMovie);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -69,12 +72,14 @@ public class MovieListFragment extends Fragment {
 
         addButton.setOnClickListener(v -> openMovieForm());
         setupSwipeToDelete(recyclerView);
+        updateGreeting();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         MovieDataSource.addListener(requireContext(), moviesListener);
+        updateGreeting();
     }
 
     @Override
@@ -96,6 +101,21 @@ public class MovieListFragment extends Fragment {
     private void openMovieForm() {
         Intent intent = new Intent(requireContext(), MovieFormActivity.class);
         startActivity(intent);
+    }
+
+    private void updateGreeting() {
+        if (greetingView == null) {
+            return;
+        }
+        String name = SessionManager.getUserName(requireContext());
+        if (TextUtils.isEmpty(name)) {
+            name = SessionManager.getUserEmail(requireContext());
+        }
+        if (TextUtils.isEmpty(name)) {
+            greetingView.setText(R.string.greeting_guest);
+        } else {
+            greetingView.setText(getString(R.string.greeting_format, name));
+        }
     }
 
     private void setupSwipeToDelete(RecyclerView recyclerView) {
