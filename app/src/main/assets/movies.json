@@ -1,0 +1,58 @@
+[
+
+  {
+    "id": "mv_interstellar",
+    "title": "Interstellar",
+    "overview": "A group of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    "genres": ["Sci-Fi", "Drama"],
+    "year": 2014,
+    "runtime": 169,
+    "rating": 8.6,
+    "watchlisted": false,
+    "imageUrl": "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg"
+  },
+  {
+    "id": "mv_arrival",
+    "title": "Arrival",
+    "overview": "A linguist works with the military to communicate with alien life forms after twelve mysterious spacecraft appear around the world.",
+    "genres": ["Sci-Fi", "Drama"],
+    "year": 2016,
+    "runtime": 116,
+    "rating": 7.9,
+    "watchlisted": false,
+    "imageUrl": "https://image.tmdb.org/t/p/w500/4HWAQu28e2yaWrtupFPGFkdNU7V.jpg"
+  },
+  {
+    "id": "mv_madmaxfuryroad",
+    "title": "Mad Max: Fury Road",
+    "overview": "In a post-apocalyptic wasteland, Max teams up with Furiosa to flee from a tyrant and his army.",
+    "genres": ["Action", "Adventure"],
+    "year": 2015,
+    "runtime": 120,
+    "rating": 8.1,
+    "watchlisted": false,
+    "imageUrl": "https://image.tmdb.org/t/p/w500/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg"
+  },
+  {
+    "id": "mv_parasite",
+    "title": "Parasite",
+    "overview": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    "genres": ["Thriller", "Drama"],
+    "year": 2019,
+    "runtime": 132,
+    "rating": 8.5,
+    "watchlisted": false,
+    "imageUrl": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
+  },
+  {
+    "id": "mv_godfather",
+    "title": "The Godfather",
+    "overview": "The aging patriarch of an organized crime dynasty transfers control of his empire to his reluctant son.",
+    "genres": ["Crime", "Drama"],
+    "year": 1972,
+    "runtime": 175,
+    "rating": 9.2,
+    "watchlisted": false,
+    "imageUrl": "https://image.tmdb.org/t/p/w500/iVZ3JAcAjmguGPnRNfWFOtLHOuY.jpg"
+  }
+]

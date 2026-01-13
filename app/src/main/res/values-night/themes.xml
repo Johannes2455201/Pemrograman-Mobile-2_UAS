@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.MyMovieFavorite" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/netflix_black</item>
+        <item name="android:navigationBarColor">@color/netflix_black</item>
+        <item name="colorPrimary">@color/netflix_red</item>
+        <item name="colorPrimaryVariant">@color/netflix_red_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/netflix_red</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/netflix_surface</item>
+        <item name="colorOnSurface">@color/netflix_light_gray</item>
+        <item name="android:colorBackground">@color/netflix_black</item>
+        <item name="materialButtonStyle">@style/Widget.MyMovieFavorite.Button</item>
+        <item name="textInputStyle">@style/Widget.MyMovieFavorite.TextInputLayout</item>
+    </style>
+</resources>

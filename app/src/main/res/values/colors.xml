@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="netflix_black">#0B0B0F</color>
+    <color name="netflix_dark">#141414</color>
+    <color name="netflix_surface">#1F1F1F</color>
+    <color name="netflix_red">#E50914</color>
+    <color name="netflix_red_dark">#B00710</color>
+    <color name="netflix_gray">#B3B3B3</color>
+    <color name="netflix_light_gray">#E5E5E5</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

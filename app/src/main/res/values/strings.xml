@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">My Movie Favorite</string>
+    <string name="menu_movies">Browse</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_watchlist">Watchlist</string>
+    <string name="menu_about">About</string>
+    <string name="title_browse_subheading">Showing Today</string>
+    <string name="empty_state_default">No movies to show right now.</string>
+    <string name="empty_state_watchlist">No watchlisted movies yet. Add a few favorites to keep them here.</string>
+    <string name="hint_search_movies">Search movies</string>
+    <string name="empty_state_search">Try another keyword to discover more titles.</string>
+    <string name="content_description_about_avatar">About avatar</string>
+    <string name="about_name">Johannes Triestanto</string>
+    <string name="about_tagline">Kelas TIF RM 23 B</string>
+    <string name="about_nim">NIM : 24552012008</string>
+    <string name="about_university">Universitas Teknologi Bandung</string>
+    <string name="about_preferences_title">Watch Preferences</string>
+    <string name="about_preferences_description">Favorite genres: Sci-fi, Drama, Thriller. Notifications enabled for weekly highlights and new releases.</string>
+    <string name="about_footer">Plan: Premium Ultra HD \u2022 Next billing cycle in 12 days</string>
+    <string name="about_watchlist_placeholder">Loading watchlist insights\u2026</string>
+    <string name="about_watchlist_format">Watchlist: %1$d titles ready for your next binge.</string>
+    <string name="about_copyright">\u00a9 2026 Johannes Triestanto (24552012008)</string>
+    <string name="content_description_movie_poster">Movie poster</string>
+    <string name="action_add_watchlist">Add to watchlist</string>
+    <string name="action_remove_watchlist">Remove from watchlist</string>
+    <string name="action_back">Back</string>
+    <string name="label_synopsis">Synopsis</string>
+    <string name="label_rating">%1$s \u2605</string>
+    <string name="label_meta_format">%1$s \u2022 %2$s \u2022 %3$s</string>
+    <string name="label_runtime">%1$s min</string>
+    <string name="watchlist_placeholder_message">Watchlist syncing coming soon.</string>
+    <string name="watchlist_added_message">Added to your watchlist.</string>
+    <string name="watchlist_removed_message">Removed from your watchlist.</string>
+</resources>
